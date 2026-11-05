@@ -98,13 +98,13 @@ button:disabled{opacity:.45;cursor:not-allowed;filter:none}
 </head>
 <body>
 <div class="banner"><strong>FICTIONAL · SYNTHETIC · PUBLIC DEMO</strong>
- — StarVault OrbitLink catalog. No real products, orders, payments, or inventory. Prices and stock are demo-derived. <strong>Not affiliated with SpaceX, Starlink, or any real company.</strong></div>
+ — StarVault OrbitLink catalog. No real products, orders, payments, or inventory. Prices and stock are demo-derived. <strong>Not affiliated with SpaceX, Starlink, Apple, Samsung, or Google.</strong></div>
 <header>
   <div class="brand">
     <div class="logo">SV</div>
     <div>
       <h1>StarVault OrbitLink Storefront</h1>
-      <p>Public product catalog demo · 176 fictional SKUs · No checkout</p>
+      <p>Public product catalog · 176 fictional SKUs · Illustrative photos · No checkout</p>
     </div>
   </div>
   <div class="actions">
@@ -126,7 +126,7 @@ button:disabled{opacity:.45;cursor:not-allowed;filter:none}
 <div class="chips" id="chips"></div>
 <div class="meta" id="meta"></div>
 <div class="grid" id="grid"></div>
-<div class="footer-note">Synthetic public demo. Family photographs are conceptual and shared by every SKU in that category. If an image cannot load, the original vector drawing is used. Stock quantities are derived for this demo only and are not warehouse balances.</div>
+<div class="footer-note">Synthetic public demo. Photos are Wikimedia/CC illustrative images — not the exact product. See ATTRIBUTION.md. Family photographs are conceptual and shared by every SKU in that category. If an image cannot load, the original vector drawing is used. Stock quantities are derived for this demo only and are not warehouse balances.</div>
 
 <div class="drawer-backdrop" id="cartBackdrop"></div>
 <aside class="drawer" id="cartDrawer" aria-label="Shopping cart">
@@ -175,12 +175,7 @@ function svgArt(cat, color){
 }
 
 
-function photoArt(p){
-  const allowed = ["PHONE","TABLET","WEARABLE","HOTSPOT","ACCESSORY","HOME_CONNECT","ROUTER","IOT","HEADPHONE","LAPTOP"];
-  const code = allowed.includes(p.cat) ? p.cat : "ACCESSORY";
-  const alt = "Conceptual synthetic image shared by the " + p.fam + " family. Not this colorway, not a real product, and not evidence of stock.";
-  return `<img class="shot" width="960" height="960" alt="${esc(alt)}" src="assets/${code}.webp" data-cat="${esc(p.cat)}" onerror="this.outerHTML=svgArt(this.dataset.cat,'')">`;
-}
+/* photoArt replaced below */
 function stockClass(n){ if(n<=0) return 'out'; if(n<15) return 'low'; return 'ok'; }
 function stockLabel(n,status){
   if(n<=0) return 'Out of demo stock';
@@ -241,7 +236,7 @@ function render(){
   grid.innerHTML = list.map(p=>`
     <article class="card" data-sku="${esc(p.sku)}">
       <div class="art">
-        ${photoArt(p)}<span class="concept">Conceptual image</span>
+        ${photoArt(p)}
         <span class="pill ${p.status==='EndOfLife'?'eol':p.status==='PreLaunch'?'pre':''}">${esc(p.status)}</span>
       </div>
       <div class="body">
@@ -397,6 +392,206 @@ document.getElementById('cartBackdrop').onclick=closeCart;
 document.getElementById('modalBackdrop').onclick=closeModal;
 [searchEl,catSel,statusEl,sortEl].forEach(el=>el.addEventListener('input', render));
 catSel.addEventListener('change', render);
+
+
+const PHOTO_POOLS = {
+  "HEADPHONE": [
+    "apple-airpods-max-angle.jpg",
+    "apple-airpods-max-side.jpg",
+    "bose-qc25.jpg",
+    "bose-qc35-ii.jpg",
+    "samsung-galaxy-buds2.jpg",
+    "sony-mdr-zx310.jpg",
+    "sony-wh-1000xm3.jpg",
+    "sony-wh-ch510.jpg"
+  ],
+  "WEARABLE": [
+    "fitbit-charge-hr.jpg",
+    "huawei-band-4.jpg",
+    "huawei-fit-2.jpg",
+    "pinetime-smartwatch.jpg",
+    "samsung-galaxy-watch.jpg"
+  ],
+  "PHONE": [
+    "samsung-galaxy-s24-ultra.jpg",
+    "samsung-galaxy-s24.jpg"
+  ],
+  "TABLET": [
+    "apple-ipad-1stgen.jpg"
+  ],
+  "HOTSPOT": [
+    "asus-tuf-router.jpg",
+    "elecom-wifi-router.jpg",
+    "netgear-n300-router.jpg"
+  ],
+  "ROUTER": [
+    "asus-tuf-router.jpg",
+    "elecom-wifi-router.jpg",
+    "netgear-n300-router.jpg"
+  ],
+  "HOME_CONNECT": [
+    "apple-homepod-mini-commons.jpg",
+    "google-home-mini.jpg"
+  ],
+  "IOT": [
+    "fitbit-charge-hr.jpg",
+    "google-home-mini.jpg",
+    "huawei-band-4.jpg",
+    "pinetime-smartwatch.jpg"
+  ],
+  "LAPTOP": [],
+  "ACCESSORY": [
+    "samsung-galaxy-buds2.jpg",
+    "apple-airpods-max-side.jpg"
+  ]
+};
+const PHOTO_META = {
+  "apple-airpods-max-angle.jpg": {
+    "title": "Apple AirPods Max 5.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Apple_AirPods_Max_5.jpg"
+  },
+  "apple-airpods-max-side.jpg": {
+    "title": "Apple AirPods Max 2.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Apple_AirPods_Max_2.jpg"
+  },
+  "apple-homepod-mini-commons.jpg": {
+    "title": "Apple HomePod mini.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Apple_HomePod_mini.jpg"
+  },
+  "apple-ipad-1stgen.jpg": {
+    "title": "IPad-WiFi-1stGen.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:IPad-WiFi-1stGen.jpg"
+  },
+  "asus-tuf-router.jpg": {
+    "title": "ASUS Wi-Fi ROUTER TUF 6500.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:ASUS_Wi-Fi_ROUTER_TUF_6500.jpg"
+  },
+  "bose-qc25.jpg": {
+    "title": "Bose QuietComfort 25 Acoustic Noise Cancelling Headphones with Carry Case.jpg",
+    "author": "Florian Fuchs",
+    "rights": "CC BY-SA 3.0/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bose_QuietComfort_25_Acoustic_Noise_Cancelling_Headphones_with_Carry_Case.jpg"
+  },
+  "bose-qc35-ii.jpg": {
+    "title": "Bose QuietComfort 35 II Wireless Headphones.jpg",
+    "author": "Carsonjp21",
+    "rights": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bose_QuietComfort_35_II_Wireless_Headphones.jpg"
+  },
+  "elecom-wifi-router.jpg": {
+    "title": "ELECOM WRC-300FEBK WPS WiFi router.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:ELECOM_WRC-300FEBK_WPS_WiFi_router.jpg"
+  },
+  "fitbit-charge-hr.jpg": {
+    "title": "Fitbit Charge HR.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Fitbit_Charge_HR.jpg"
+  },
+  "google-home-mini.jpg": {
+    "title": "Google Home Mini - grey.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Google_Home_Mini_-_grey.jpg"
+  },
+  "huawei-band-4.jpg": {
+    "title": "Huawei Smartwatch (Band 4).jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Huawei_Smartwatch_(Band_4).jpg"
+  },
+  "huawei-fit-2.jpg": {
+    "title": "Huawei Smartwatch Fit 2.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Huawei_Smartwatch_Fit_2.jpg"
+  },
+  "netgear-n300-router.jpg": {
+    "title": "Netgear N300 wireless router n03.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Netgear_N300_wireless_router_n03.jpg"
+  },
+  "pinetime-smartwatch.jpg": {
+    "title": "PineTime smartwatch.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "CC see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:PineTime_smartwatch.jpg"
+  },
+  "samsung-galaxy-buds2.jpg": {
+    "title": "Samsung Galaxy Buds2.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Samsung_Galaxy_Buds2.jpg"
+  },
+  "samsung-galaxy-s24-ultra.jpg": {
+    "title": "SAMSUNG Galaxy S24 Ultra (2).jpg",
+    "author": "Dinkun Chen",
+    "rights": "Creative Commons Attribution-Share Alike 4.0 International (CC BY-SA 4.0)",
+    "source": "https://commons.wikimedia.org/wiki/File:SAMSUNG_Galaxy_S24_Ultra_(2).jpg"
+  },
+  "samsung-galaxy-s24.jpg": {
+    "title": "Samsung Galaxy S24 (webtekno) 007.png",
+    "author": "webtekno",
+    "rights": "Creative Commons Attribution 3.0 Unported (CC BY 3.0)",
+    "source": "https://commons.wikimedia.org/wiki/File:Samsung_Galaxy_S24_(webtekno)_007.png"
+  },
+  "samsung-galaxy-watch.jpg": {
+    "title": "Samsung Galaxy Watch.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Samsung_Galaxy_Watch.jpg"
+  },
+  "sony-mdr-zx310.jpg": {
+    "title": "MDR-ZX310.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:MDR-ZX310.jpg"
+  },
+  "sony-wh-1000xm3.jpg": {
+    "title": "Sony-WH-1000XM3-kabellose-Bluetooth-Noise-Cancelling-Kopfhoerer.jpg",
+    "author": "PantheraLeo1359531",
+    "rights": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sony-WH-1000XM3-kabellose-Bluetooth-Noise-Cancelling-Kopfhoerer.jpg"
+  },
+  "sony-wh-ch510.jpg": {
+    "title": "Sony WH-CH510 Bluetooth Over-Ear Headphone.jpg",
+    "author": "Wikimedia contributor",
+    "rights": "see Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Sony_WH-CH510_Bluetooth_Over-Ear_Headphone.jpg"
+  }
+};
+function peerIndex(p){
+  // stable within same category only; does not cross product types
+  const peers = PRODUCTS.filter(x => x.cat === p.cat);
+  peers.sort((a,b)=> a.name.localeCompare(b.name) || a.sku.localeCompare(b.sku));
+  return Math.max(0, peers.findIndex(x => x.sku === p.sku));
+}
+function photoFor(p){
+  const pool = PHOTO_POOLS[p.cat] || [];
+  if(!pool.length) return null;
+  return pool[peerIndex(p) % pool.length];
+}
+function photoArt(p){
+  const file = photoFor(p);
+  const alt = "Illustrative category image — not the exact product. Fictional SKU " + p.name + " (" + p.catName + ").";
+  if(!file){
+    return svgArt(p.cat,'');
+  }
+  return `<img class="shot" width="960" height="960" alt="${esc(alt)}" src="../assets/images/${file}" data-cat="${esc(p.cat)}" onerror="this.outerHTML=svgArt(this.dataset.cat,'')"><span class="concept">Illustrative category image — not the exact product</span>`;
+}
 
 render(); renderCartBadge();
 // Self-test harness for offline verification
