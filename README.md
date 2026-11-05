@@ -1,6 +1,6 @@
 # StarVault OrbitLink Demo (public)
 
-Synthetic supply-chain analytics demo and static storefront snapshot.
+Synthetic supply-chain analytics demo and offline product catalog.
 
 **Not affiliated with SpaceX, Starlink, or any real company.** All data is synthetic / illustrative.
 
@@ -9,21 +9,23 @@ Synthetic supply-chain analytics demo and static storefront snapshot.
 After GitHub Pages is enabled (Deploy from branch → `main` → `/ (root)`):
 
 - Analytics dashboard: `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/analytics/`
-- Storefront (static demo): `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/storefront/`
+- Product catalog: `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/storefront/`
 
 ## Contents
 
 | Path | Description |
 |------|-------------|
 | `analytics/index.html` | Self-contained static analytics dashboard (aggregated cubes only; no raw 1M fact rows) |
-| `storefront/` | Static demo adaptation of the storefront (no real checkout/payments) |
+| `storefront/index.html` | Offline product catalog (176 fictional SKUs, search/filters, localStorage demo cart; checkout disabled) |
+| `storefront/assets/*.webp` | Ten conceptual category images shared by SKUs in each family |
+| `storefront/preview.png` | Optional light-theme screenshot |
 
 ## What is excluded
 
 - Raw CSV / SQLite / local vault documents
 - Real contact details, secrets, API keys
-- Commercial-looking fields (MSRP, unit cost, credit limits, PII-shaped contacts, precise addresses)
-- Uncleared product photos (replaced with honest placeholders when needed)
+- Live Node checkout server / payment processing
+- Real product photography (images are conceptual category plates; SVG fallback if an image fails)
 
 ## License / use
 
