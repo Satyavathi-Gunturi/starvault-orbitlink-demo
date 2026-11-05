@@ -8,16 +8,19 @@ Synthetic supply-chain analytics demo and offline product catalog.
 
 After GitHub Pages is enabled (Deploy from branch → `main` → `/ (root)`):
 
+- Product catalog (site root): `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/`
 - Analytics dashboard: `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/analytics/`
-- Product catalog: `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/storefront/`
+- Same catalog (older path): `https://satyavathi-gunturi.github.io/starvault-orbitlink-demo/storefront/`
 
 ## Contents
 
 | Path | Description |
 |------|-------------|
+| `index.html` | Offline product catalog at the site root (176 fictional SKUs, search/filters, localStorage demo cart; checkout disabled) |
+| `assets/*.webp` | Ten conceptual category images for the root catalog |
 | `analytics/index.html` | Self-contained static analytics dashboard (aggregated cubes only; no raw 1M fact rows) |
-| `storefront/index.html` | Offline product catalog (176 fictional SKUs, search/filters, localStorage demo cart; checkout disabled) |
-| `storefront/assets/*.webp` | Ten conceptual category images shared by SKUs in each family |
+| `storefront/index.html` | Same offline catalog, so `/storefront/` links keep working |
+| `storefront/assets/*.webp` | Same category images for the `/storefront/` copy |
 | `storefront/preview.png` | Optional light-theme screenshot |
 
 ## What is excluded
