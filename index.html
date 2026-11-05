@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>StarVault OrbitLink — Branded Photo Mockup (Fictional · Illustrative)</title>
+<title>StarVault OrbitLink — Product Storefront (Synthetic Demo)</title>
 <style>
 :root{
   --bg:#f3f1ed; --panel:#fbfaf8; --card:#fbfaf8; --line:#e3dfd8;
@@ -52,7 +52,6 @@ button:disabled{opacity:.45;cursor:not-allowed;filter:none}
 .art{height:auto;aspect-ratio:1;display:block;background:#e7e4df;position:relative;border-top:3px solid var(--accent)}
 .art svg{width:100%;height:100%}
 .art img.shot{width:100%;height:100%;object-fit:cover;display:block}
-.art img.shot{object-position:center}
 .concept{position:absolute;left:10px;bottom:10px;background:rgba(251,250,248,.92);color:#1c1b19;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 6px}
 .pill{position:absolute;top:10px;left:10px;font-size:10px;padding:3px 8px;border-radius:999px;
   background:rgba(15,23,42,.8);border:1px solid var(--line);color:#cbd5e1}
@@ -98,14 +97,14 @@ button:disabled{opacity:.45;cursor:not-allowed;filter:none}
 </style>
 </head>
 <body>
-<div class="banner"><strong>FICTIONAL · SYNTHETIC · ILLUSTRATIVE PHOTO MOCKUP</strong>
- — Independent demo retailer UI only. Not affiliated with SpaceX, Starlink, Apple, Samsung, or Google. Not an authorized reseller. Product photos are manufacturer press / openly licensed images mapped illustratively onto fictional StarVault SKUs. No real products, stock, prices, orders, or payments.</div>
+<div class="banner"><strong>FICTIONAL · SYNTHETIC · PUBLIC DEMO</strong>
+ — StarVault OrbitLink catalog. No real products, orders, payments, or inventory. Prices and stock are demo-derived. <strong>Not affiliated with SpaceX, Starlink, or any real company.</strong></div>
 <header>
   <div class="brand">
     <div class="logo">SV</div>
     <div>
       <h1>StarVault OrbitLink Storefront</h1>
-      <p>Cream-layout mockup · 176 fictional SKUs · Illustrative Wikimedia/CC photos (Apple Newsroom images excluded from public host) · No checkout</p>
+      <p>Public product catalog demo · 176 fictional SKUs · No checkout</p>
     </div>
   </div>
   <div class="actions">
@@ -127,7 +126,7 @@ button:disabled{opacity:.45;cursor:not-allowed;filter:none}
 <div class="chips" id="chips"></div>
 <div class="meta" id="meta"></div>
 <div class="grid" id="grid"></div>
-<div class="footer-note">Fictional StarVault OrbitLink demo. Cream card layout preserved. Public host uses Wikimedia/CC illustrative photos only (see ATTRIBUTION.md). Apple Newsroom press images were excluded from this public deploy. Not real inventory. Not affiliated with Apple or Samsung. No real stock, MSRP authority, or checkout. SVG fallback if a local asset fails.</div>
+<div class="footer-note">Synthetic public demo. Family photographs are conceptual and shared by every SKU in that category. If an image cannot load, the original vector drawing is used. Stock quantities are derived for this demo only and are not warehouse balances.</div>
 
 <div class="drawer-backdrop" id="cartBackdrop"></div>
 <aside class="drawer" id="cartDrawer" aria-label="Shopping cart">
@@ -176,35 +175,11 @@ function svgArt(cat, color){
 }
 
 
-const PHOTO_POOLS = {
-  HEADPHONE: ["assets/images/bose-qc35-ii.jpg", "assets/images/sony-wh-1000xm3.jpg", "assets/images/bose-qc25.jpg", "assets/images/sony-wh-ch510.jpg", "assets/images/apple-airpods-max-side.jpg", "assets/images/sony-mdr-zx310.jpg", "assets/images/apple-airpods-max-angle.jpg", "assets/images/samsung-galaxy-buds2.jpg"],
-  WEARABLE: ["assets/images/fitbit-charge-hr.jpg", "assets/images/samsung-galaxy-watch.jpg", "assets/images/huawei-band-4.jpg", "assets/images/pinetime-smartwatch.jpg", "assets/images/huawei-fit-2.jpg", "assets/images/samsung-galaxy-buds2.jpg"],
-  PHONE: ["assets/images/samsung-galaxy-s24-ultra.jpg", "assets/images/samsung-galaxy-s24.jpg"],
-  LAPTOP: ["assets/images/apple-airpods-max-angle.jpg", "assets/images/apple-airpods-max-side.jpg", "assets/images/apple-homepod-mini-commons.jpg"],
-  TABLET: ["assets/images/apple-ipad-1stgen.jpg", "assets/images/samsung-galaxy-s24.jpg"],
-  ACCESSORY: ["assets/images/samsung-galaxy-buds2.jpg"],
-  HOTSPOT: ["assets/images/asus-tuf-router.jpg", "assets/images/netgear-n300-router.jpg", "assets/images/elecom-wifi-router.jpg", "assets/images/google-home-mini.jpg"],
-  ROUTER: ["assets/images/netgear-n300-router.jpg", "assets/images/asus-tuf-router.jpg", "assets/images/elecom-wifi-router.jpg"],
-  HOME_CONNECT: ["assets/images/google-home-mini.jpg", "assets/images/apple-homepod-mini-commons.jpg", "assets/images/asus-tuf-router.jpg", "assets/images/netgear-n300-router.jpg", "assets/images/elecom-wifi-router.jpg"],
-  IOT: ["assets/images/samsung-galaxy-s24.jpg", "assets/images/google-home-mini.jpg", "assets/images/huawei-band-4.jpg", "assets/images/fitbit-charge-hr.jpg", "assets/images/pinetime-smartwatch.jpg"],
-};
-const _peerSkuOrder = {};
-function peerIndex(p){
-  if(!_peerSkuOrder[p.cat]){
-    _peerSkuOrder[p.cat] = PRODUCTS.filter(x=>x.cat===p.cat).sort((a,b)=>a.name.localeCompare(b.name)).map(x=>x.sku);
-  }
-  const i = _peerSkuOrder[p.cat].indexOf(p.sku);
-  return i < 0 ? 0 : i;
-}
-function pickPhoto(p){
-  const pool = PHOTO_POOLS[p.cat] || PHOTO_POOLS.ACCESSORY;
-  // Rotate through category pool by stable name-order index so adjacent same-category cards differ.
-  return pool[peerIndex(p) % pool.length];
-}
 function photoArt(p){
-  const src = pickPhoto(p);
-  const alt = "ILLUSTRATIVE manufacturer/press or openly licensed photo mapped to fictional SKU " + p.name + " (" + p.catName + "). Not this exact product, not real inventory, not an authorized-reseller listing.";
-  return `<img class="shot" width="960" height="960" alt="${esc(alt)}" src="${src}" data-cat="${esc(p.cat)}" loading="lazy" onerror="this.outerHTML=svgArt(this.dataset.cat,'')">`;
+  const allowed = ["PHONE","TABLET","WEARABLE","HOTSPOT","ACCESSORY","HOME_CONNECT","ROUTER","IOT","HEADPHONE","LAPTOP"];
+  const code = allowed.includes(p.cat) ? p.cat : "ACCESSORY";
+  const alt = "Conceptual synthetic image shared by the " + p.fam + " family. Not this colorway, not a real product, and not evidence of stock.";
+  return `<img class="shot" width="960" height="960" alt="${esc(alt)}" src="assets/${code}.webp" data-cat="${esc(p.cat)}" onerror="this.outerHTML=svgArt(this.dataset.cat,'')">`;
 }
 function stockClass(n){ if(n<=0) return 'out'; if(n<15) return 'low'; return 'ok'; }
 function stockLabel(n,status){
@@ -266,7 +241,7 @@ function render(){
   grid.innerHTML = list.map(p=>`
     <article class="card" data-sku="${esc(p.sku)}">
       <div class="art">
-        ${photoArt(p)}<span class="concept">Illustrative photo</span>
+        ${photoArt(p)}<span class="concept">Conceptual image</span>
         <span class="pill ${p.status==='EndOfLife'?'eol':p.status==='PreLaunch'?'pre':''}">${esc(p.status)}</span>
       </div>
       <div class="body">
